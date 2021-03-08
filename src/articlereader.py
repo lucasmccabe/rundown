@@ -3,10 +3,13 @@ from bs4 import BeautifulSoup
 import nltk
 
 class ArticleReader():
+    """
+    Scrapes/parses articles and does text analysis.
+    """
     def __init__(
             self,
             url,
-            outlet):
+            outlet = None):
         """
         Constructor for the ArticleReader class.
 
@@ -15,7 +18,7 @@ class ArticleReader():
         url : `str`
             the url of the article
         outlet : `str`
-            the name of the outlet (e.g. BBC)
+            the name of the outlet (e.g. "Reuters")
         """
         self.url = url
         self.outlet = outlet
@@ -29,21 +32,19 @@ class ArticleReader():
         -------
         a dict of parsed information (title and contents)
         """
-        outlet = self.outlet.lower()
-        if outlet == "bbc":
-            return self.read_bbc(self.url)
+        if not self.outlet:
+            return self.scrape_page(self.url)
         else:
-            raise ValueError(
-                "Sorry, %s is not a supported outlet." %self.outlet)
+            raise ValueError("Outlet APIs not yet supported.")
 
-    def read_bbc(self, url):
+    def scrape_page(self, url):
         """
-        Parses a BBC article.
+        Parses an article by scraping. Less than ideal, but what we have so far.
 
         Parameters
         ----------
         url : `str`
-            the url of the BBC article
+            the url of the article
 
         Returns
         -------
@@ -86,12 +87,26 @@ class ArticleReader():
         entities = self.get_entities()
         return [e[1] for e in entities if e[0] == "PERSON"]
 
+    def get_places(self):
+        """
+        Returns named entities tagged "GPE" (geo-political entity).
 
+        Returns
+        -------
+        places : `list`
+            list of GPEs
+        """
+        entities = self.get_entities()
+        return [e[1] for e in entities if e[0] == "GPE"]
 
+    def get_orgs(self):
+        """
+        Returns named entities tagged "ORGANIZATION".
 
-
-article = ArticleReader(
-    url = "http://www.bbc.com/travel/story/20210307-how-rice-shaped-the-american-south?referer=https%3A%2F%2Fwww.bbc.com%2F",
-    outlet = "BBC")
-
-print(article.get_people())
+        Returns
+        -------
+        orgs : `list`
+            list of ORGANIZATIONs
+        """
+        entities = self.get_entities()
+        return [e[1] for e in entities if e[0] == "ORGANIZATION"]

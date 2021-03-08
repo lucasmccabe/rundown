@@ -10,7 +10,17 @@ class Utils():
         self.rundown = self.init_rundown()
 
     def init_rundown(self):
-        """Authenticates API, etc."""
+        """
+        Authenticates API, etc.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        api
+        """
         env_vars = {}
         with open("../.env", "r") as f:
             for line in f:
@@ -22,15 +32,35 @@ class Utils():
         auth.set_access_token(
             env_vars["ACCESS TOKEN"],
             env_vars["ACCESS TOKEN SECRET"])
-        rundown = tweepy.API(
+        api = tweepy.API(
             auth,
             wait_on_rate_limit=True,
             wait_on_rate_limit_notify=True)
         try:
-            rundown.verify_credentials()
+            api.verify_credentials()
         except:
             raise ValueError("Configuration failed.")
-        return rundown
+        return api
+
+    def get_mentions(self, last_id = None):
+        """
+        Returns 20 most recent tweets from timeline mentioning @rundown_bot.
+
+        Parameters
+        ----------
+        last_id : `int`
+
+        Returns
+        -------
+        mentions : `list'
+            20 most recent tweets from timeline mentioning @rundown_bot.
+        """
+        if not last_id or last_id == 0:
+            mentions = self.rundown.mentions_timeline()
+        else:
+            mentions = self.rundown.mentions_timeline(since_id = last_id)
+        mentions.reverse()
+        return mentions
 
     def get_following(self, user):
         """

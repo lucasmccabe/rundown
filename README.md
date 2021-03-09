@@ -2,13 +2,13 @@
 
 `rundown` is a WIP Twitter bot to help resolve the social media information bottleneck.
 
-![box](img/logo.PNG)
+![box](img/logo_large.PNG)
 
-Find me on Twitter: [@rundown_bot](https://twitter.com/rundown_bot)!
+Find me on Twitter: [@rundown_bot](https://twitter.com/rundown_bot/with_replies)!
 
 ## Usage
 
-Current functionality:
+#### Current functionality:
 
 - Command: doesfollow
   - Format: @rundown_bot #doesfollow @user1 @user2
@@ -23,7 +23,11 @@ Current functionality:
   - Format: @rundown_bot #articleorgs url
   - Function: extracts named entities tagged ORGANIZATION from linked article
 
+#### WIP functionality:
 
+- Command: articleabstract
+  - Format: @rundown_bot #articleabstract url
+  - Function: abstractive summarization of linked article
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

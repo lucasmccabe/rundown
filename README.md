@@ -2,7 +2,7 @@
 
 `rundown` is a WIP Twitter bot to help resolve the social media information bottleneck.
 
-![box](img/logo_large.PNG)
+![box](img/logo_large.png)
 
 Find me on Twitter: [@rundown_bot](https://twitter.com/rundown_bot/with_replies)!
 

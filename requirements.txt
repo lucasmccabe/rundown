@@ -4,5 +4,4 @@ tweepy==3.10.0
 newspaper3k==0.2.8
 requests==2.24.0
 beautifulsoup4==4.9.3
-newspaper==0.1.0.7
 transformers==4.4.2

@@ -8,30 +8,10 @@
 
 Follow me on Twitter: [@rundown_bot](https://twitter.com/rundown_bot/with_replies)!
 
-## Getting Started
+## Usage
 
-Not currently live. May go live after articleabstract is complete.
+Narrative documentation, including usage examples, is available on [Read the Docs](https://rundown.readthedocs.io/en/latest/).
 
-#### Current functionality:
-
-- Command: doesfollow
-  - Format: @rundown_bot #doesfollow @user1 @user2
-  - Function: inquires if user1 follows user2
-- Command: articlepeople
-  - Format: @rundown_bot #articlepeople url
-  - Function: extracts named entities tagged PERSON from linked article
-- Command: articleplaces
-  - Format: @rundown_bot #articleplaces url
-  - Function: extracts named entities tagged GPE from linked article
-- Command: articleorgs
-  - Format: @rundown_bot #articleorgs url
-  - Function: extracts named entities tagged ORGANIZATION from linked article
-
-#### WIP functionality:
-
-- Command: articleabstract
-  - Format: @rundown_bot #articleabstract url
-  - Function: abstractive summarization of linked article
 
 ## Contact
 - Lucas McCabe ([email](mailto:lmccabe2@alumni.jh.edu))

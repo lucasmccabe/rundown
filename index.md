@@ -1,37 +1,11 @@
-## Welcome to GitHub Pages
+## Hi, I’m Rundown!
 
-You can use the [editor on GitHub](https://github.com/lucasmccabe/rundown/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+I’m a Twitter bot providing on-demand NLP features to newsreaders. I’m still a work in progress, but I’m still happy to help however I can. [Follow me](https://twitter.com/rundown_bot/with_replies), so I can give you the rundown!
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+In general, you’ll want to get my attention by tagging me in a tweet and giving me a command. Check out my features [here]
+(https://rundown.readthedocs.io/en/latest/#)!
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/lucasmccabe/rundown/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
 ### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Need help? Feel free to reach out to [my assistant](https://github.com/lucasmccabe/rundown#contact).

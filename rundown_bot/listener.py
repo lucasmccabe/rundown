@@ -3,7 +3,10 @@ import re
 import time
 from utils import Utils
 from articlereader import ArticleReader
+from transformers import pipeline
+import requests
 
+summarizer = pipeline("summarization")
 
 def handle_generic_reply(utils, mention):
     """
@@ -23,6 +26,59 @@ def handle_generic_reply(utils, mention):
         mention.id)
     return None
 
+def handle_articleabstract(utils, mention):
+    """
+    Handles #articleabstract functionality. Performs abstractive summarization.
+
+    Parameters
+    ----------
+    utils : `Utils object`
+        extends tweepy api wrapper
+    mention : `Status object`
+        a single mention
+
+    Returns
+    -------
+    None
+    """
+    urls = re.findall(r'(https?://[^\s]+)', mention.text)
+    if not urls or len(urls) != 1:
+        utils.rundown.update_status(
+            "@%s to use the #articleabstract service, your message should be in the following format: @ rundown_bot #articleabstract url" %mention.user.screen_name,
+            mention.id)
+    else:
+        article = ArticleReader(url = urls[0])
+        body = article.article["body"][:512]
+        summary = summarizer(
+            body,
+            max_length = 200,
+            min_length = 50,
+            do_sample = False)[0]["summary_text"]
+        summary = summary.replace(" .", ".")
+        #summary = ". ".join(list(set(summary[:-1].split(". "))))
+        n = 250 - len(mention.user.screen_name) - 14
+        summary_tweets = [summary[i:i+n] for i in range(0, len(summary), n)]
+        summary_tweets = [summary_tweets[i] + " (%s/%s)" %(
+                str(i+1),
+                str(len(summary_tweets))) \
+            for i \
+            in range(len(summary_tweets))]
+
+        status = None
+        for tweet in summary_tweets:
+            if not status:
+                status = utils.rundown.update_status(
+                    "@%s %s" %(mention.user.screen_name, tweet),
+                    in_reply_to_status_id = mention.id,
+                    auto_populate_reply_metadata = True)
+            else:
+                status = utils.rundown.update_status(
+                    "@%s %s" %(mention.user.screen_name, tweet),
+                    in_reply_to_status_id = status.id,
+                    auto_populate_reply_metadata = True)
+    return None
+
+
 def handle_articlepeople(utils, mention):
     """
     Handles #articlepeople functionality.
@@ -41,7 +97,7 @@ def handle_articlepeople(utils, mention):
     urls = re.findall(r'(https?://[^\s]+)', mention.text)
     if not urls or len(urls) != 1:
         utils.rundown.update_status(
-            "@%s to use the #articlepeople service, your message should be in the following format: @rundown_bot #articlepeople url" %mention.user.screen_name,
+            "@%s to use the #articlepeople service, your message should be in the following format: @ rundown_bot #articlepeople url" %mention.user.screen_name,
             mention.id)
     else:
         article = ArticleReader(url = urls[0])
@@ -183,7 +239,7 @@ def handle_mentions(utils, mentions):
         list of Status objects (mentions)
     """
     for mention in mentions:
-        if mention.id.screen_name == "rundown_bot":
+        if mention.user.screen_name == "rundown_bot":
             continue
         text = mention.text.lower()
         try:
@@ -195,6 +251,8 @@ def handle_mentions(utils, mentions):
                 handle_articleplaces(utils, mention)
             elif "#articleorgs" in text:
                 handle_articleorgs(utils, mention)
+            elif "#articleabstract" in text:
+                handle_articleabstract(utils, mention)
             else:
                 handle_generic_reply(utils, mention)
         except tweepy.TweepError as e:
@@ -215,7 +273,8 @@ def read_last_id():
 
     Returns
     -------
-    None
+    last_id : `int`
+        the last-responded-to mention ID
     """
     with open("last_id.txt", "r") as f:
         last_id = int(f.read().strip())
@@ -251,7 +310,16 @@ def main():
 
     while True:
         mentions = utils.get_mentions(last_id)
-        handle_mentions(utils, mentions)
+        if not mentions:
+            time.sleep(60)
+            continue
+        try:
+            handle_mentions(utils, mentions)
+        except requests.exceptions.RequestException as e:
+            last_id = mentions[-1].id
+            write_last_id(last_id)
+            time.sleep(60)
+            continue
         last_id = mentions[-1].id
         write_last_id(last_id)
         time.sleep(60)

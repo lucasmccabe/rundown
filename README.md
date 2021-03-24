@@ -1,12 +1,16 @@
 # rundown
 
-`rundown` is a WIP Twitter bot to help resolve the social media information bottleneck.
+> Give me the rundown!
+
+`rundown` is a WIP Twitter bot providing on-demand NLP features to newsreaders.
 
 ![box](img/logo_large.png)
 
-Find me on Twitter: [@rundown_bot](https://twitter.com/rundown_bot/with_replies)!
+Follow me on Twitter: [@rundown_bot](https://twitter.com/rundown_bot/with_replies)!
 
-## Usage
+## Getting Started
+
+Not currently live. May go live after articleabstract is complete.
 
 #### Current functionality:
 
@@ -28,6 +32,9 @@ Find me on Twitter: [@rundown_bot](https://twitter.com/rundown_bot/with_replies)
 - Command: articleabstract
   - Format: @rundown_bot #articleabstract url
   - Function: abstractive summarization of linked article
+
+## Contact
+- Lucas McCabe ([email](mailto:lmccabe2@alumni.jh.edu))
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

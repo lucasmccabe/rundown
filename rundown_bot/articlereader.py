@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import nltk
+from newspaper import Article
 
 class ArticleReader():
     """
@@ -9,7 +10,7 @@ class ArticleReader():
     def __init__(
             self,
             url,
-            outlet = None):
+            use_soup = True):
         """
         Constructor for the ArticleReader class.
 
@@ -17,11 +18,13 @@ class ArticleReader():
         ----------
         url : `str`
             the url of the article
-        outlet : `str`
-            the name of the outlet (e.g. "Reuters")
+        use_soup : `bool`
+            describes whether you want to extract article info via bs4 scraping
+            defaults True for now because Newspaper3k doesn't typically extract
+            enough on its own
         """
         self.url = url
-        self.outlet = outlet
+        self.use_soup = use_soup
         self.article = self.read_article()
 
     def read_article(self):
@@ -32,10 +35,31 @@ class ArticleReader():
         -------
         a dict of parsed information (title and contents)
         """
-        if not self.outlet:
+        if self.use_soup:
             return self.scrape_page(self.url)
         else:
             raise ValueError("Outlet APIs not yet supported.")
+
+    def donwload_article(self, url):
+        """
+        Extracts article content using Newspaper3k.
+
+        Parameters
+        ----------
+        url : `str`
+            the url of the article
+
+        Returns
+        -------
+        a dict of parsed information (title and contents)
+        """
+        article = Article(url)
+        article.download()
+        article.parse()
+        article.text = article.text.replace("\n", " ")
+        return {
+            "title": article.title,
+            "body": article.text}
 
     def scrape_page(self, url):
         """

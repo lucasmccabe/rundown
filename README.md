@@ -2,7 +2,7 @@
 
 > Give me the rundown!
 
-`rundown` is a Twitter bot providing on-demand NLP features to newsreaders. Follow me on Twitter: [@rundown_bot](https://twitter.com/rundown_bot/with_replies)!
+`rundown` is a Twitter bot providing on-demand NLP features to newsreaders. [Follow me on Twitter](https://twitter.com/rundown_bot/with_replies)!
 
 ![box](img/logo_large.png)
 

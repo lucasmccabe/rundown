@@ -15,7 +15,7 @@
 * [Requirements](#requirements)
 * [License](#license)
 
-## Usage
+## Landing Page
 My landing page is [here](https://lucasmccabe.github.io/rundown/).
 
 ## Usage
